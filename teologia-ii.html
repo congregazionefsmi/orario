@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Cache Control Headers to prevent caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <title>Teologia II</title>
+  <style>
+    :root {
+      --bg-color: #f4f6f9;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent-note: #d97706;
+      --bg-note: #fffbeb;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 20px 12px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: var(--primary);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    /* Interactive Side-by-Side Cards (Forced side-by-side even on mobile) */
+    .quick-view {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .day-card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      min-width: 0; /* Prevents flex/grid blowout */
+    }
+
+    .day-card.today {
+      border: 2px solid var(--primary);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card-title.today-title {
+      color: var(--primary);
+    }
+
+    .card-title.tomorrow-title {
+      color: var(--text-muted);
+    }
+
+    .day-name {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .mini-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .mini-item {
+      font-size: 0.8rem;
+      word-break: break-word;
+    }
+
+    .mini-time {
+      font-weight: 700;
+      color: var(--primary);
+      margin-right: 2px;
+    }
+
+    .mini-note {
+      font-size: 0.7rem;
+      color: var(--accent-note);
+      background-color: var(--bg-note);
+      padding: 2px 4px;
+      border-radius: 4px;
+      margin-top: 2px;
+      display: inline-block;
+    }
+
+    /* Full Schedule List */
+    .schedule-section {
+      background-color: var(--card-bg);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .section-heading {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .day-block {
+      margin-bottom: 20px;
+    }
+
+    .day-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .day-heading {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .event-item {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background-color: #f8fafc;
+    }
+
+    .event-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .event-time {
+      font-weight: 700;
+      font-size: 0.9rem;
+      min-width: 50px;
+      color: var(--text-main);
+    }
+
+    .event-title {
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .event-note {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: var(--accent-note);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <header>
+      <a href="index.html" class="back-btn">← Back to Hub</a>
+      <h1>Teologia II</h1>
+    </header>
+
+    <!-- Top Part: Interactive Today & Tomorrow Side-by-Side (Forced 2 columns on mobile) -->
+    <section class="quick-view">
+      <div class="day-card today">
+        <div class="card-header">
+          <span class="card-title today-title">Today</span>
+          <span class="day-name" id="today-name">--</span>
+        </div>
+        <div class="mini-list" id="today-events">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="card-header">
+          <span class="card-title tomorrow-title">Tomorrow</span>
+          <span class="day-name" id="tomorrow-name">--</span>
+        </div>
+        <div class="mini-list" id="tomorrow-events">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Full Schedule List -->
+    <section class="schedule-section">
+      <h2 class="section-heading">Weekly Schedule</h2>
+
+      <!-- Lunedì -->
+      <div class="day-block">
+        <div class="day-heading">Lunedì</div>
+        <div class="event-list">
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">10:20</span>
+              <span class="event-title">Cristologia</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">15:00</span>
+              <span class="event-title">Missione</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Martedì -->
+      <div class="day-block">
+        <div class="day-heading">Martedì</div>
+        <div class="event-list">
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">08:30</span>
+              <span class="event-title">Corpus Johanneum (2h)</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">16:50</span>
+              <span class="event-title">Lingua Greca II</span>
+            </div>
+            <div class="event-note">📌 Bring books Greco</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mercoledì -->
+      <div class="day-block">
+        <div class="day-heading">Mercoledì</div>
+        <div class="event-list">
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">08:30</span>
+              <span class="event-title">Teologia spirituale (2)</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">10:05</span>
+              <span class="event-title">1 hr break</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">11:10</span>
+              <span class="event-title">Storia Moderna-Cont</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Giovedì -->
+      <div class="day-block">
+        <div class="day-heading">Giovedì</div>
+        <div class="event-list">
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">08:30</span>
+              <span class="event-title">Morale speciale</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">10:20</span>
+              <span class="event-title">Ebraico</span>
+            </div>
+            <div class="event-note">📌 Ebraico book</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Venerdì -->
+      <div class="day-block">
+        <div class="day-heading">Venerdì</div>
+        <div class="event-list">
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">08:30</span>
+              <span class="event-title">Libri Profetici</span>
+            </div>
+          </div>
+          <div class="event-item">
+            <div class="event-row">
+              <span class="event-time">10:20</span>
+              <span class="event-title">Diritto canonico II</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const scheduleData = {
+      1: {
+        day: "Lunedì",
+        events: [
+          { time: "10:20", title: "Cristologia" },
+          { time: "15:00", title: "Missione" }
+        ]
+      },
+      2: {
+        day: "Martedì",
+        events: [
+          { time: "08:30", title: "Corpus Johanneum (2h)" },
+          { time: "16:50", title: "Lingua Greca II", note: "Bring books Greco" }
+        ]
+      },
+      3: {
+        day: "Mercoledì",
+        events: [
+          { time: "08:30", title: "Teologia spirituale (2)" },
+          { time: "10:05", title: "1 hr break" },
+          { time: "11:10", title: "Storia Moderna-Cont" }
+        ]
+      },
+      4: {
+        day: "Giovedì",
+        events: [
+          { time: "08:30", title: "Morale speciale" },
+          { time: "10:20", title: "Ebraico", note: "Ebraico book" }
+        ]
+      },
+      5: {
+        day: "Venerdì",
+        events: [
+          { time: "08:30", title: "Libri Profetici" },
+          { time: "10:20", title: "Diritto canonico II" }
+        ]
+      }
+    };
+
+    function renderQuickView() {
+      const todayDate = new Date();
+      const tomorrowDate = new Date();
+      tomorrowDate.setDate(todayDate.getDate() + 1);
+
+      const todayDayNum = todayDate.getDay();
+      const tomorrowDayNum = tomorrowDate.getDay();
+
+      renderDayCard('today', todayDayNum);
+      renderDayCard('tomorrow', tomorrowDayNum);
+    }
+
+    function renderDayCard(type, dayNum) {
+      const nameEl = document.getElementById(`${type}-name`);
+      const eventsEl = document.getElementById(`${type}-events`);
+
+      const dayData = scheduleData[dayNum];
+
+      if (!dayData) {
+        nameEl.textContent = getDayName(dayNum);
+        eventsEl.innerHTML = '<div style="color: var(--text-muted); font-size: 0.75rem;">No classes</div>';
+        return;
+      }
+
+      nameEl.textContent = dayData.day;
+      eventsEl.innerHTML = dayData.events.map(ev => `
+        <div class="mini-item">
+          <div><span class="mini-time">${ev.time}</span>${ev.title}</div>
+          ${ev.note ? `<div class="mini-note">📌 ${ev.note}</div>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function getDayName(dayNum) {
+      const days = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
+      return days[dayNum];
+    }
+
+    renderQuickView();
+  </script>
+
+</body>
+</html>

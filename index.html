@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Cache Control Headers to prevent caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <title>Schedule Hub</title>
+  <style>
+    :root {
+      --bg-color: #f4f6f9;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --secondary: #475569;
+      --secondary-hover: #334155;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: var(--card-bg);
+      width: 100%;
+      max-width: 480px;
+      padding: 32px 24px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    header p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin: 20px 0 10px 4px;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: #ffffff;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .arrow {
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <header>
+      <h1>Schedule Hub</h1>
+      <p>Select a view or calendar to proceed</p>
+    </header>
+
+    <div class="section-title">Teologia</div>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="navigateTo('teologia-ii.html')">
+        <span>📖 Teologia II</span>
+        <span class="arrow">→</span>
+      </button>
+    </div>
+
+    <div class="section-title">Service Calendars</div>
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="navigateTo('servizio-cucina.html')">
+        <span>🍳 Servizio Cucina</span>
+        <span class="arrow">→</span>
+      </button>
+
+      <button class="btn btn-secondary" onclick="navigateTo('servizio-liturgico.html')">
+        <span>⛪ Servizio Liturgico</span>
+        <span class="arrow">→</span>
+      </button>
+
+      <button class="btn btn-secondary" onclick="navigateTo('assistente.html')">
+        <span>🤝 Assistente Calendar</span>
+        <span class="arrow">→</span>
+      </button>
+    </div>
+  </main>
+
+  <script>
+    function navigateTo(url) {
+      // Appends a cache-busting timestamp parameter when navigating
+      const cacheBuster = '_ts=' + Date.now();
+      const delimiter = url.includes('?') ? '&' : '?';
+      window.location.href = url + delimiter + cacheBuster;
+    }
+  </script>
+
+</body>
+</html>

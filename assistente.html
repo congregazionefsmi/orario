@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Cache Control Headers to prevent caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <title>Assistenza Padre Alcibiade – Novembre 2026</title>
+  <meta name="description" content="Calendario dei turni per l'assistenza a Padre Alcibiade della comunità FSMI per novembre 2026.">
+
+  <!--
+    SOCIAL PREVIEW:
+    After publishing on GitHub Pages, replace the placeholder URL below
+    with the full public URL of your preview image (1200 x 630 px).
+    Example: https://USERNAME.github.io/REPOSITORY/preview.png
+  -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="it_IT">
+  <meta property="og:title" content="Assistenza Padre Alcibiade – Novembre 2026">
+  <meta property="og:description" content="Calendario dei turni per l'assistenza a Padre Alcibiade della comunità FSMI.">
+  <meta property="og:image" content="https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Assistenza Padre Alcibiade – Novembre 2026">
+  <meta name="twitter:description" content="Calendario dei turni per l'assistenza a Padre Alcibiade della comunità FSMI.">
+  <meta name="twitter:image" content="https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/preview.png">
+
+  <style>
+    :root {
+      --navy: #12345a;
+      --navy-deep: #0c2746;
+      --blue: #1683c6;
+      --blue-soft: #eaf6ff;
+      --blue-pale: #f4faff;
+      --red: #c83d4b;
+      --red-soft: #fff0f1;
+      --ink: #24364a;
+      --muted: #718096;
+      --paper: #ffffff;
+      --page: #eef4f8;
+      --today: #1683c6;
+      --shadow: 0 10px 28px rgba(20, 48, 78, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 28px 18px 36px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(74,174,232,.12), transparent 32rem),
+        var(--page);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .page {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .calendar-shell {
+      overflow: hidden;
+      background: var(--paper);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 30px 34px 27px;
+      color: var(--navy);
+      background:
+        radial-gradient(circle at 94% 18%, rgba(74,174,232,.10), transparent 150px),
+        linear-gradient(120deg, #ffffff 0%, #ffffff 68%, #f7fbff 100%);
+      border-bottom: 1px solid #e8f1f8;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      right: -42px;
+      top: -105px;
+      border: 1px solid rgba(22,131,198,.16);
+      border-radius: 50%;
+      box-shadow: 0 0 0 17px rgba(22,131,198,.035),
+                  0 0 0 36px rgba(22,131,198,.025);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-family: Arial, sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+      font-weight: 600;
+      letter-spacing: .025em;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      position: relative;
+      z-index: 1;
+      margin: 11px 0 0;
+      color: #718096;
+      font-family: Arial, sans-serif;
+      font-size: .95rem;
+      letter-spacing: .04em;
+    }
+
+    .hero-mark {
+      position: absolute;
+      z-index: 1;
+      right: 34px;
+      bottom: 27px;
+      color: rgba(22,131,198,.55);
+      font-size: 2rem;
+    }
+
+    .content { padding: 24px 26px 26px; }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 20px;
+      margin: 0 0 18px;
+      font-family: Arial, sans-serif;
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .legend-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .legend-dot.red { background: var(--red); }
+
+    .legend-today {
+      width: 15px;
+      height: 15px;
+      border: 2px solid var(--today);
+      border-radius: 5px;
+      background: #f0f9ff;
+    }
+
+    .weekdays, .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .weekdays { margin-bottom: 9px; }
+
+    .weekday {
+      padding: 7px 4px;
+      color: #728196;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: .69rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+    }
+
+    .weekday:first-child { color: var(--red); }
+
+    .day {
+      position: relative;
+      display: flex;
+      min-height: 125px;
+      flex-direction: column;
+      padding: 11px 10px 10px;
+      border-radius: 15px;
+      background: var(--blue-pale);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .day.empty {
+      min-height: 0;
+      background: transparent;
+    }
+
+    .day.sunday, .day.holiday {
+      background: var(--red-soft);
+    }
+
+    .day.today {
+      z-index: 1;
+      outline: 3px solid var(--today);
+      outline-offset: 1px;
+      background: #e7f5ff;
+      box-shadow: 0 5px 18px rgba(22,131,198,.18);
+    }
+
+    .day.today.sunday, .day.today.holiday {
+      background: #ffe8eb;
+    }
+
+    .date-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .date-number {
+      color: var(--blue);
+      font-family: Arial, sans-serif;
+      font-size: 1.12rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .sunday .date-number, .holiday .date-number { color: var(--red); }
+
+    .today-label {
+      display: none;
+      padding: 3px 6px;
+      border-radius: 20px;
+      color: white;
+      background: var(--today);
+      font-family: Arial, sans-serif;
+      font-size: .54rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .today .today-label { display: inline-block; }
+
+    .names {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-family: Arial, sans-serif;
+      font-size: .76rem;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .name { color: #344a60; }
+    .name.unassigned { color: var(--muted); font-style: italic; font-weight: normal; }
+
+    .celebration {
+      margin-top: auto;
+      padding-top: 8px;
+      color: #a63b48;
+      font-family: Arial, sans-serif;
+      font-size: .61rem;
+      font-style: italic;
+      line-height: 1.25;
+    }
+
+    .today .celebration { color: #96313e; }
+
+    .lower {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .info-panel {
+      padding: 17px 19px;
+      border-radius: 16px;
+      background: #f5f9fc;
+    }
+
+    .info-panel h2 {
+      margin: 0 0 12px;
+      color: var(--navy);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .instructions-text {
+      font-family: Arial, sans-serif;
+      font-size: .78rem;
+      line-height: 1.5;
+      color: #344a60;
+      margin-bottom: 10px;
+    }
+
+    .instructions-text:last-child {
+      margin-bottom: 0;
+    }
+
+    .footnote {
+      margin: 18px 2px 0;
+      color: #8a97a6;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: .68rem;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 10px; }
+      .calendar-shell { border-radius: 18px; }
+      .hero { padding: 24px 21px 22px; }
+      .hero-mark { right: 20px; bottom: 20px; font-size: 1.55rem; }
+      .content { padding: 18px 14px 20px; }
+      .weekdays, .calendar-grid { gap: 5px; }
+      .weekday {
+        padding: 5px 0;
+        font-size: .58rem;
+        letter-spacing: .02em;
+      }
+      .day {
+        min-height: 112px;
+        padding: 8px 6px 7px;
+        border-radius: 10px;
+      }
+      .date-number { font-size: .98rem; }
+      .names { gap: 4px; font-size: .64rem; }
+      .celebration { font-size: .54rem; }
+      .today-label { font-size: .46rem; padding: 2px 4px; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 7px; }
+      .hero { padding: 21px 18px; }
+      .hero-mark { display: none; }
+      .content { padding: 16px 12px 18px; }
+      .weekdays { display: none; }
+      .calendar-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+      }
+      .day {
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 55px minmax(0, 1fr);
+        grid-template-rows: auto auto;
+        column-gap: 10px;
+        align-items: start;
+        padding: 11px 12px;
+        border-radius: 12px;
+      }
+      .day.empty { display: none; }
+      .date-row {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+        margin: 0;
+      }
+      .date-number { font-size: 1.25rem; }
+      .today-label { font-size: .5rem; }
+      .names {
+        grid-column: 2;
+        grid-row: 1;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4px 12px;
+        padding-top: 1px;
+        font-size: .78rem;
+        grid-row: 1 / span 2;
+        align-self: center;
+      }
+      .celebration { display: none; }
+    }
+
+    @media print {
+      @page { size: A4 landscape; margin: 7mm; }
+      body {
+        padding: 0;
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page { width: 100%; max-width: none; }
+      .calendar-shell { border-radius: 0; box-shadow: none; }
+      .hero { padding: 17px 24px 15px; }
+      h1 { font-size: 2.25rem; }
+      .content { padding: 14px 18px 12px; }
+      .day { min-height: 94px; padding: 8px; }
+      .weekdays, .calendar-grid { gap: 6px; }
+      .lower { margin-top: 13px; gap: 10px; }
+      .info-panel { padding: 11px 14px; }
+      .footnote { margin-top: 9px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="calendar-shell" aria-label="Orario quotidiano per l'assistenza a Padre Alcibiade novembre 2026">
+      <header class="hero">
+        <p class="eyebrow">Assistenza Comunitaria FSMI</p>
+        <h1>Padre Alcibiade</h1>
+        <p class="subtitle">Orario quotidiano – Novembre 2026</p>
+        <div class="hero-mark" aria-hidden="true">✦</div>
+      </header>
+
+      <div class="content">
+        <div class="legend" aria-label="Legenda">
+          <span class="legend-item"><span class="legend-dot red"></span>Domeniche e festività</span>
+          <span class="legend-item"><span class="legend-dot"></span>Giorni ordinari</span>
+          <span class="legend-item"><span class="legend-today"></span>Oggi</span>
+        </div>
+
+        <div class="weekdays" aria-hidden="true">
+          <div class="weekday">DOM</div>
+          <div class="weekday">LUN</div>
+          <div class="weekday">MAR</div>
+          <div class="weekday">MER</div>
+          <div class="weekday">GIO</div>
+          <div class="weekday">VEN</div>
+          <div class="weekday">SAB</div>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+        <section class="lower">
+          <div class="info-panel">
+            <h2>Indicazioni per l'assistenza a Padre Alcibiade</h2>
+            <p class="instructions-text">
+              • <strong>Vespri:</strong> Si fanno con P. Alcibiade nella sua camera. Successivamente, è necessario prestare assistenza per accompagnarlo in refettorio.
+            </p>
+            <p class="instructions-text">
+              • <strong>Durante il pasto:</strong> L'incaricato del giorno ha il compito di sedere accanto a P. Alcibiade durante il pasto, aiutandolo a servirsi e a versare le bevande. Al termine della cena, lo riaccompagnerà alla sua camera per la somministrazione dei farmaci e la preparazione per il riposo notturno.
+            </p>
+            <p class="instructions-text">
+              • <strong>Farmaci:</strong> L’incaricato deve controllare sempre la lista delle medicine appesa in camera e in refettorio. Bisogna seguire lo schema preciso per dare le pillole giuste al momento giusto.
+            </p>
+          </div>
+        </section>
+
+        <p class="footnote">«Servite il Signore con gioia» · Assistenza Padre Alcibiade FSMI</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    // Exact sequential mapping according to the provided grid sequence:
+    // Week 1: 1: Peter Paul, 2: Reymark, 3: Fra. Lorenzo, 4: Rico, 5: Joshua, 6: No one, 7: No one
+    // Week 2: 8: Harold, 9: Gerald, 10: Ivan, 11: Peter Paul, 12: Reymark, 13: Rico, 14: Joshua
+    // Week 3: 15: Gerald, 16: Harold, 17: Fra. Lorenzo, 18: Ivan, 19: Peter Paul, 20: Reymark, 21: Rico
+    // Week 4: 22: Joshua, 23: Harold, 24: Fra. Lorenzo, 25: Gerald, 26: Ivan, 27: Peter Paul, 28: Reymark
+    // Week 5: 29: Rico, 30: Joshua
+    const assignments = {
+      1:  ["Peter Paul"],
+      2:  ["Reymark"],
+      3:  ["Fra. Lorenzo"],
+      4:  ["Rico"],
+      5:  ["Joshua"],
+      6:  [],
+      7:  [],
+      8:  ["Harold"],
+      9:  ["Gerald"],
+      10: ["Ivan"],
+      11: ["Peter Paul"],
+      12: ["Reymark"],
+      13: ["Rico"],
+      14: ["Joshua"],
+      15: ["Gerald"],
+      16: ["Harold"],
+      17: ["Fra. Lorenzo"],
+      18: ["Ivan"],
+      19: ["Peter Paul"],
+      20: ["Reymark"],
+      21: ["Rico"],
+      22: ["Joshua"],
+      23: ["Harold"],
+      24: ["Fra. Lorenzo"],
+      25: ["Gerald"],
+      26: ["Ivan"],
+      27: ["Peter Paul"],
+      28: ["Reymark"],
+      29: ["Rico"],
+      30: ["Joshua"]
+    };
+
+    const celebrations = {
+      1:  "Tutti i Santi",
+      2:  "Commemorazione dei defunti",
+      8:  "XXXII Dom. Tempo Ordinario",
+      15: "XXXIII Dom. Tempo Ordinario",
+      22: "Cristo Re dell’Universo",
+      29: "I Domenica di Avvento"
+    };
+
+    const grid = document.getElementById("calendarGrid");
+    const year = 2026;
+    const month = 10; // Novembre: gennaio = 0
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstWeekday = new Date(year, month, 1).getDay(); // Domenica = 0
+
+    function renderCalendar() {
+      grid.innerHTML = "";
+
+      for (let i = 0; i < firstWeekday; i++) {
+        const empty = document.createElement("div");
+        empty.className = "day empty";
+        empty.setAttribute("aria-hidden", "true");
+        grid.appendChild(empty);
+      }
+
+      const now = new Date();
+      const isNovember2026 = now.getFullYear() === year && now.getMonth() === month;
+
+      for (let date = 1; date <= daysInMonth; date++) {
+        const weekday = new Date(year, month, date).getDay();
+        const isSunday = weekday === 0;
+        const isToday = isNovember2026 && now.getDate() === date;
+        const isHoliday = date === 1;
+
+        const card = document.createElement("article");
+        card.className = "day";
+        if (isSunday) card.classList.add("sunday");
+        if (isHoliday) card.classList.add("holiday");
+        if (isToday) card.classList.add("today");
+
+        const dateRow = document.createElement("div");
+        dateRow.className = "date-row";
+
+        const number = document.createElement("span");
+        number.className = "date-number";
+        number.textContent = date;
+
+        const todayLabel = document.createElement("span");
+        todayLabel.className = "today-label";
+        todayLabel.textContent = "Oggi";
+
+        dateRow.append(number, todayLabel);
+
+        const names = document.createElement("div");
+        names.className = "names";
+        names.setAttribute("aria-label", "Incaricato del giorno");
+
+        const dayPersons = assignments[date] || [];
+        if (dayPersons.length === 0) {
+          const name = document.createElement("span");
+          name.className = "name unassigned";
+          name.textContent = "Nessuno";
+          names.appendChild(name);
+        } else {
+          dayPersons.forEach(person => {
+            const name = document.createElement("span");
+            name.className = "name";
+            name.textContent = person;
+            names.appendChild(name);
+          });
+        }
+
+        card.appendChild(dateRow);
+        card.appendChild(names);
+
+        if (celebrations[date]) {
+          const celebration = document.createElement("div");
+          celebration.className = "celebration";
+          celebration.textContent = celebrations[date];
+          card.appendChild(celebration);
+        }
+
+        if (isToday) {
+          card.setAttribute("aria-current", "date");
+        }
+
+        grid.appendChild(card);
+      }
+    }
+
+    renderCalendar();
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) renderCalendar();
+    });
+    window.addEventListener("focus", renderCalendar);
+  </script>
+</body>
+</html>
