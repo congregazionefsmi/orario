@@ -640,6 +640,7 @@ function renderSchedule() {
    CENTER CURRENT WEEK
 ========================================= */
 
+    
 function centerCurrentWeek(smooth = true) {
 
     const scroll = document.getElementById("tableScroll");
@@ -648,12 +649,28 @@ function centerCurrentWeek(smooth = true) {
         "#headerRow th.today"
     );
 
-    if (!highlighted) return;
+    const locationColumn = document.querySelector(
+        "#headerRow th:first-child"
+    );
+
+    if (!highlighted || !locationColumn) return;
+
+    const locationWidth = locationColumn.offsetWidth;
+
+    // Available area excludes the LUOGO column.
+    const availableWidth = scroll.clientWidth - locationWidth;
+
+    // Center of the available area.
+    const targetCenter =
+        locationWidth + availableWidth / 2;
+
+    // Center of the highlighted date.
+    const highlightedCenter =
+        highlighted.offsetLeft
+        + highlighted.offsetWidth / 2;
 
     const target =
-        highlighted.offsetLeft
-        + highlighted.offsetWidth / 2
-        - scroll.clientWidth / 2;
+        highlightedCenter - targetCenter;
 
     scroll.scrollTo({
         left: Math.max(0, target),
@@ -661,6 +678,7 @@ function centerCurrentWeek(smooth = true) {
     });
 
 }
+
 
 /* =========================================
    NAVIGATION
