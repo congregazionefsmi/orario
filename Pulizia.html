@@ -1,0 +1,705 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Programma Pulizie</title>
+
+<style>
+:root {
+    --blue: #1683c6;
+    --blue-dark: #086ba9;
+    --blue-light: #eaf6ff;
+    --blue-border: #a9d9f5;
+    --text: #263747;
+    --muted: #718096;
+    --border: #e5eaf0;
+    --background: #f5f8fb;
+    --surface: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 28px;
+    font-family: Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+}
+
+.container {
+    max-width: 1600px;
+    margin: auto;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.eyebrow {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.period {
+    background: var(--blue-light);
+    color: var(--blue);
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+h1 {
+    font-size: 30px;
+    margin: 0 0 7px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* NAVIGATION */
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 22px 0 12px;
+}
+
+.legend {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.legend-dot {
+    width: 11px;
+    height: 11px;
+    background: #d9efff;
+    border: 1px solid var(--blue-border);
+    border-radius: 3px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 7px;
+}
+
+.nav-buttons button {
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--blue-dark);
+    padding: 9px 13px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav-buttons button:hover {
+    background: var(--blue-light);
+}
+
+/* TABLE */
+
+.table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    overflow: hidden;
+    box-shadow: 0 3px 14px rgba(30, 60, 90, .045);
+}
+
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    touch-action: pan-x pan-y;
+    scrollbar-width: thin;
+    scrollbar-color: #b7cddd #f1f5f9;
+}
+
+table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
+th, td {
+    width: 145px;
+    min-width: 145px;
+    padding: 16px 12px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    font-size: 13px;
+}
+
+th {
+    background: #f8fafc;
+    color: #536477;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    height: 65px;
+}
+
+th:first-child,
+td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    width: 285px;
+    min-width: 285px;
+    max-width: 285px;
+    text-align: left;
+    padding-left: 20px;
+}
+
+th:first-child {
+    background: #f1f5f9;
+    z-index: 5;
+}
+
+td:first-child {
+    background: white;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #33485c;
+}
+
+tbody tr:nth-child(even) td:first-child {
+    background: #fafbfd;
+}
+
+th:last-child,
+td:last-child {
+    border-right: none;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:nth-child(even) td:not(:first-child) {
+    background: #fafbfd;
+}
+
+/* CURRENT WEEK */
+
+.today {
+    background: var(--blue-light) !important;
+    color: var(--blue-dark) !important;
+    border-left: 1px solid var(--blue-border);
+    border-right: 1px solid var(--blue-border);
+}
+
+th.today {
+    background: #d9efff !important;
+    border-top: 3px solid var(--blue);
+}
+
+.today-label {
+    display: block;
+    font-size: 9px;
+    margin-top: 6px;
+    color: var(--blue);
+    letter-spacing: 1px;
+}
+
+.name {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.footer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .header-top {
+        align-items: flex-start;
+    }
+
+    .period {
+        font-size: 10px;
+    }
+
+    .navigation {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .nav-buttons {
+        width: 100%;
+    }
+
+    .nav-buttons button {
+        flex: 1;
+    }
+
+    th, td {
+        width: 125px;
+        min-width: 125px;
+        padding: 14px 9px;
+    }
+
+    th:first-child,
+    td:first-child {
+        width: 220px;
+        min-width: 220px;
+        max-width: 220px;
+        padding-left: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+
+        <div class="header-top">
+            <span class="eyebrow">COMUNITÀ · ORGANIZZAZIONE</span>
+            <span class="period">NOVEMBRE 2026 – GIUGNO 2027</span>
+        </div>
+
+        <h1>Programma Pulizie</h1>
+
+        <div class="subtitle">
+            Assegnazione settimanale dei servizi
+        </div>
+
+    </header>
+
+    <div class="navigation">
+
+        <div class="legend">
+            <span class="legend-dot"></span>
+            <span id="currentWeekText">Settimana corrente</span>
+        </div>
+
+        <div class="nav-buttons">
+            <button onclick="moveWeek(-1)">← Precedente</button>
+            <button onclick="goToCurrentWeek()">Oggi</button>
+            <button onclick="moveWeek(1)">Successiva →</button>
+        </div>
+
+    </div>
+
+    <div class="table-card">
+
+        <div class="table-scroll" id="tableScroll">
+
+            <table id="scheduleTable">
+
+                <thead>
+                    <tr id="headerRow">
+                        <th>LUOGO</th>
+                    </tr>
+                </thead>
+
+                <tbody id="scheduleBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <span>Programma settimanale · 2026–2027</span>
+        <span>Scorri orizzontalmente per le altre settimane →</span>
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================
+   CONFIGURATION
+========================================= */
+
+const START_DATE = "2026-10-24";
+const BASE_DATE = "2026-11-14";
+const END_DATE = "2027-06-26";
+
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+
+/* =========================================
+   ASSIGNMENT ROTATION
+
+   Every week the names rotate by one position.
+   The original 14 November assignments are
+   the reference for the entire schedule.
+========================================= */
+
+const locations = [
+
+    {
+        name: "1. Chiesa / sacristia / atrio",
+        pair: true,
+        names: [
+            "Reymark",
+            "Rico",
+            "Joshua",
+            "Gerald",
+            "Harold",
+            "Ivan",
+            "Peter"
+        ]
+    },
+
+    {
+        name: "2. Corridoio Częstochowa / (compreso il bagno sul corridoio) biblioteca su",
+        names: [
+            "Rico",
+            "Joshua",
+            "Gerald",
+            "Harold",
+            "Ivan",
+            "Peter",
+            "Reymark"
+        ]
+    },
+
+    {
+        name: "3. Corridoio Lujan e Loreto / scala centrale / scala dal terzo piano fino al secondo piano",
+        names: [
+            "Joshua",
+            "Gerald",
+            "Harold",
+            "Ivan",
+            "Peter",
+            "Reymark",
+            "Rico"
+        ]
+    },
+
+    {
+        name: "4. Corridoio Guadalupe / sala giochi / scala dove finisce la scala centrale",
+        names: [
+            "Gerald",
+            "Harold",
+            "Ivan",
+            "Peter",
+            "Reymark",
+            "Rico",
+            "Joshua"
+        ]
+    },
+
+    {
+        name: "5. Biblioteca giù / corridoio davanti / scala dal secondo piano al primo / cantina",
+        names: [
+            "Harold",
+            "Ivan",
+            "Peter",
+            "Reymark",
+            "Rico",
+            "Joshua",
+            "Gerald"
+        ]
+    },
+
+    {
+        name: "6. Refettorio (lavare i mantelli) / antirefettorio (bagno e biancheria)",
+        names: [
+            "Ivan",
+            "Peter",
+            "Reymark",
+            "Rico",
+            "Joshua",
+            "Gerald",
+            "Harold"
+        ]
+    },
+
+    {
+        name: "7. Parlatoio / bagni fuori / stendibiancheria",
+        names: [
+            "Peter",
+            "Reymark",
+            "Rico",
+            "Joshua",
+            "Gerald",
+            "Harold",
+            "Ivan"
+        ]
+    }
+
+];
+
+/* =========================================
+   DATE HELPERS
+========================================= */
+
+function parseDate(value) {
+    const [year, month, day] = value.split("-").map(Number);
+    return new Date(Date.UTC(year, month - 1, day));
+}
+
+function dateDifference(a, b) {
+    return Math.round((a - b) / WEEK_MS);
+}
+
+function formatDate(date) {
+    return new Intl.DateTimeFormat("it-IT", {
+        day: "numeric",
+        month: "short",
+        timeZone: "UTC"
+    }).format(date).toUpperCase().replace(".", "");
+}
+
+function getDates() {
+
+    const dates = [];
+
+    const start = parseDate(START_DATE);
+    const end = parseDate(END_DATE);
+
+    for (
+        let current = new Date(start);
+        current <= end;
+        current = new Date(current.getTime() + WEEK_MS)
+    ) {
+        dates.push(new Date(current));
+    }
+
+    return dates;
+}
+
+/* =========================================
+   CURRENT WEEK
+
+   Uses the latest Saturday that has arrived.
+========================================= */
+
+function getCurrentSaturday() {
+
+    const now = new Date();
+
+    const today = new Date(Date.UTC(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate()
+    ));
+
+    const daysSinceSaturday = (today.getUTCDay() + 1) % 7;
+
+    today.setUTCDate(today.getUTCDate() - daysSinceSaturday);
+
+    return today;
+}
+
+/* =========================================
+   GENERATE TABLE
+========================================= */
+
+const dates = getDates();
+const baseDate = parseDate(BASE_DATE);
+
+let currentIndex = 0;
+
+function getAssignment(location, date) {
+
+    const offset = dateDifference(date, baseDate);
+
+    const index = ((offset % 7) + 7) % 7;
+
+    const name = location.names[index];
+
+    return location.pair
+        ? "Martin / " + name
+        : name;
+}
+
+function renderSchedule() {
+
+    const header = document.getElementById("headerRow");
+    const body = document.getElementById("scheduleBody");
+
+    header.innerHTML = "<th>LUOGO</th>";
+    body.innerHTML = "";
+
+    const currentDate = getCurrentSaturday();
+
+    let highlightIndex = dates.findIndex(date =>
+        date.getTime() === currentDate.getTime()
+    );
+
+    // Keep the highlight within the available schedule.
+    if (highlightIndex < 0) {
+        highlightIndex = currentDate < dates[0]
+            ? 0
+            : dates.length - 1;
+    }
+
+    currentIndex = highlightIndex;
+
+    /* HEADER */
+
+    dates.forEach((date, index) => {
+
+        const th = document.createElement("th");
+
+        th.innerHTML = formatDate(date);
+
+        if (index === highlightIndex) {
+            th.classList.add("today");
+            th.innerHTML +=
+                '<span class="today-label">QUESTA SETTIMANA</span>';
+        }
+
+        header.appendChild(th);
+
+    });
+
+    /* BODY */
+
+    locations.forEach(location => {
+
+        const tr = document.createElement("tr");
+
+        const place = document.createElement("td");
+        place.textContent = location.name;
+
+        tr.appendChild(place);
+
+        dates.forEach((date, index) => {
+
+            const td = document.createElement("td");
+
+            td.textContent = getAssignment(location, date);
+
+            if (index === highlightIndex) {
+                td.classList.add("today");
+            }
+
+            tr.appendChild(td);
+
+        });
+
+        body.appendChild(tr);
+
+    });
+
+    document.getElementById("currentWeekText").textContent =
+        "Settimana corrente · " + formatDate(dates[highlightIndex]);
+
+    // Position the current week in the center.
+    requestAnimationFrame(() => {
+        centerCurrentWeek(false);
+    });
+
+}
+
+/* =========================================
+   CENTER CURRENT WEEK
+========================================= */
+
+function centerCurrentWeek(smooth = true) {
+
+    const scroll = document.getElementById("tableScroll");
+
+    const highlighted = document.querySelector(
+        "#headerRow th.today"
+    );
+
+    if (!highlighted) return;
+
+    const target =
+        highlighted.offsetLeft
+        + highlighted.offsetWidth / 2
+        - scroll.clientWidth / 2;
+
+    scroll.scrollTo({
+        left: Math.max(0, target),
+        behavior: smooth ? "smooth" : "instant"
+    });
+
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function moveWeek(direction) {
+
+    const scroll = document.getElementById("tableScroll");
+
+    const highlighted = document.querySelector(
+        "#headerRow th.today"
+    );
+
+    if (!highlighted) return;
+
+    const width = highlighted.offsetWidth;
+
+    scroll.scrollBy({
+        left: direction * width,
+        behavior: "smooth"
+    });
+
+}
+
+function goToCurrentWeek() {
+    centerCurrentWeek(true);
+}
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+renderSchedule();
+
+window.addEventListener("resize", () => {
+    centerCurrentWeek(false);
+});
+
+</script>
+
+</body>
+</html>
