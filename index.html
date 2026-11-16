@@ -134,7 +134,12 @@
 
     <div class="section-title">Teologia</div>
     <div class="btn-group">
-      <button class="btn btn-primary" onclick="navigateTo('teologia-ii.html')">
+      <button class="btn btn-primary" onclick="navigateTo('teologia-i.html')">
+        <span>📖 Teologia I</span>
+        <span class="arrow">→</span>
+      </button>
+      
+      <button class="btn btn-secondary" onclick="navigateTo('teologia-ii.html')">
         <span>📖 Teologia II</span>
         <span class="arrow">→</span>
       </button>
@@ -151,25 +156,36 @@
         <span>⛪ Servizio Liturgico</span>
         <span class="arrow">→</span>
       </button>
+      
+      <button class="btn btn-secondary" onclick="navigateTo('Pulizia.html')">
+        <span>✨ Pulizia</span>
+        <span class="arrow">→</span>
+      </button>
 
       <button class="btn btn-secondary" onclick="navigateTo('assistente.html')">
         <span>🤝 Assistente Calendar</span>
         <span class="arrow">→</span>
       </button>
-
       
-<button class="btn btn-secondary" onclick="navigateTo('Pulizia.html')">
-        <span>Pulizia</span>
+      <!-- Example: To make a button go to a live online URL instead of a local file, use this: -->
+      <!-- 
+      <button class="btn btn-secondary" onclick="navigateTo('https://your-live-website.com/portal')">
+        <span>🌐 Online Portal (Live)</span>
         <span class="arrow">→</span>
-      </button>
-
-      
+      </button> 
+      -->
     </div>
   </main>
 
   <script>
     function navigateTo(url) {
-      // Appends a cache-busting timestamp parameter when navigating
+      // If it's an external/live URL, go straight to it without cache-busters
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        window.location.href = url;
+        return;
+      }
+      
+      // Otherwise, append cache-busting timestamp for local files
       const cacheBuster = '_ts=' + Date.now();
       const delimiter = url.includes('?') ? '&' : '?';
       window.location.href = url + delimiter + cacheBuster;

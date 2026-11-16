@@ -66,21 +66,25 @@
     }
 
     .calendar-shell {
-      overflow: hidden;
       background: var(--paper);
       border-radius: 24px;
       box-shadow: var(--shadow);
     }
 
     .hero {
-      position: relative;
+      position: sticky;
+      top: 0;
+      z-index: 50;
       overflow: hidden;
       padding: 30px 34px 27px;
       color: var(--navy);
       background:
         radial-gradient(circle at 94% 18%, rgba(74,174,232,.10), transparent 150px),
         linear-gradient(120deg, #ffffff 0%, #ffffff 68%, #f7fbff 100%);
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
       border-bottom: 1px solid #e8f1f8;
+      box-shadow: 0 4px 12px rgba(18, 52, 90, 0.04);
     }
 
     .hero::after {
@@ -202,6 +206,7 @@
       border-radius: 15px;
       background: var(--blue-pale);
       transition: transform .18s ease, box-shadow .18s ease;
+      scroll-margin-top: 170px; /* Accounts for sticky header offset on mobile scroll */
     }
 
     .day.empty {
@@ -356,7 +361,11 @@
     @media (max-width: 700px) {
       body { padding: 10px; }
       .calendar-shell { border-radius: 18px; }
-      .hero { padding: 24px 21px 22px; }
+      .hero {
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+        padding: 24px 21px 22px;
+      }
       .hero-mark { right: 20px; bottom: 20px; font-size: 1.55rem; }
       .content { padding: 18px 14px 20px; }
       .weekdays, .calendar-grid { gap: 5px; }
@@ -369,6 +378,7 @@
         min-height: 112px;
         padding: 8px 6px 7px;
         border-radius: 10px;
+        scroll-margin-top: 150px;
       }
       .date-number { font-size: .98rem; }
       .names { gap: 4px; font-size: .64rem; }
@@ -399,6 +409,7 @@
         align-items: start;
         padding: 11px 12px;
         border-radius: 12px;
+        scroll-margin-top: 140px;
       }
       .day.empty { display: none; }
       .date-row {
@@ -444,7 +455,7 @@
       }
       .page { width: 100%; max-width: none; }
       .calendar-shell { border-radius: 0; box-shadow: none; }
-      .hero { padding: 17px 24px 15px; }
+      .hero { position: static; padding: 17px 24px 15px; }
       h1 { font-size: 2.25rem; }
       .content { padding: 14px 18px 12px; }
       .day { min-height: 94px; padding: 8px; }
@@ -602,7 +613,10 @@
         card.className = "day";
         if (isSunday) card.classList.add("sunday");
         if (isHoliday) card.classList.add("holiday");
-        if (isToday) card.classList.add("today");
+        if (isToday) {
+          card.classList.add("today");
+          card.id = "today-card";
+        }
 
         const dateRow = document.createElement("div");
         dateRow.className = "date-row";
@@ -644,6 +658,14 @@
 
         grid.appendChild(card);
       }
+
+      // Automatically scroll to today's date if it exists
+      setTimeout(() => {
+        const todayEl = document.getElementById("today-card");
+        if (todayEl) {
+          todayEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
     }
 
     renderCalendar();
